@@ -1,67 +1,65 @@
 document.addEventListener('DOMContentLoaded', start)
-
 //add an onclick function to all buttons
+var input = []
+//creating empty array for number & calc storage
+var temp = ""
 
 function start () {
+// Select numbers
   var numbers = document.getElementsByClassName('numberpad')
-  //var buttons = document.getElementsByTagName('td'); // Select all buttons
-  //var    screen_result = document.getElementsByClassName('display')[0]; // Select the equation-field window
-  //var    clear = document.getElementsByClassName('clear')[0]; // Select the clearAll-button
-
-  // when you mouse over it.
-
-
-window.alert(numbers.length);
-
   for (var i = 0; i < numbers.length; i ++){
-    numbers[i].addEventListener('click', displayNum)
-
-
-    // Looping through buttons to add onclick-event
-    // If the inside of that button is NOT '=' --> we will
-    // add the onclick-function: addValue(i).
-    // If it is '=' --> add the onclick-function: calculate(i)
-
-
-    /*if (numbers[i].innerHTML === '=') {
-      buttons[i].addEventListener("click", calculate(i));
-    } else {
-      buttons[i].addEventListener("click", addValue(i));
-    }*/
-
+    numbers[i].addEventListener('click', processNum)
   };
+// Select operators
+  var operators = document.getElementsByClassName('sym')
+  for (var i = 0; i <operators.length; i ++){
+      operators[i].addEventListener('click', processSym)
+  };
+// Selecting equals
+  var equal = document.getElementsByClassName('symEqual')[0]
+  equal.addEventListener('click', compute)
+
+// Selecting clear
+  var empty = document.getElementsByClassName('clear')[0]
+  empty.addEventListener('click', clear)
 };
-
-function displayNum (evt){
-  evt.target.classlist.toggle ('displayNum')
+// Clearing array for clear function to work on calculator
+function clear (evt){
+  input = [];
+  var screen_result = document.getElementsByClassName('display')[0]
+    screen_result.innerHTML = "0";
 }
-
-
-/*function operatorSwitch(i) {
-    return function () {
-      /* Replacing the '÷' and 'x' symbols,because JS doesn't calculate with them. . operatorSwitch(i) does is pretty simple: the
+      //Joining arrays and pushing to temp to creat multiple digit numbers & enable calculations
+function compute(evt){
+    input.push(temp);
+    temp = "";
+    var total = eval(input.join(""))
+    var screen_result = document.getElementsByClassName('display')[0]
+    screen_result.innerHTML = total;
+}
+      /* Replacing the '÷' and 'x' symbols,because JS doesn't calculate with them. operatorSwitch(i) does is pretty simple: the
      adds value to the ‘result’-div:*/
-/*
-      if (buttons[i].innerHTML === '÷') {
-         screen_result.innerHTML  += '/';
-      } else if (buttons[i].innerHTML === 'x') {
-         screen_result.innerHTML  += '*';
-      } else {
-         screen_result.innerHTML  += buttons[i].innerHTML;
-      }
-    };
-}
-
-/* calculating what to do with ‘result’ using JS-function: eval() function!*/
-/*
-function calculate(i) {
-  return function () {
-      screen_result.innerHTML = eval(screen_result.innerHTML);
-  };
-}
-/*   clear 'results'  */
-/*
-clear.onclick = function () {
-  result.innerHTML = '';
+function operatorSwitch(i) {
+    var transformed = i
+    if (i === '÷') {
+       transformed  = '/';
+    } else if (i === '×') {
+        transformed  =  '*';
+    }
+    return transformed
 };
-*/
+  // go find display area and get inner html numbers from target and put in temp array in display
+function processNum (evt){
+    var screen_result = document.getElementsByClassName('display')[0]
+    temp += evt.target.innerHTML;
+    screen_result.innerHTML = temp;
+}
+// using temp for first number then  get inner html symbols from target and put in temp array in display
+function processSym (evt){
+    input.push(temp);
+    temp = "";
+    var screen_result = document.getElementsByClassName('display')[0]
+    screen_result.innerHTML = evt.target.innerHTML;
+    input.push(operatorSwitch(evt.target.innerHTML));
+    console.log(input);
+}
