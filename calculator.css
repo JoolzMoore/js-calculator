@@ -20,23 +20,8 @@ td {
   background: black;
   color: white;
   font-family: courier;
+}
 
-}
-/*.table, td{
-  border: 1px solid black;
-  text-align: center;
-  float: center;*?
-
-}
-.result {
-  width: 285px;
-  height: 40px;
-  border: 1px solid gray;
-  float: left;
-  line-height: 40px;
-}
-.result > p {
-  /* margin-left: 10px; */
 
 .numberpad {
   background-color: #7D8CC4;
