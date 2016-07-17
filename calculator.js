@@ -29,15 +29,14 @@ function clear (evt) {
   var screen_result = document.getElementsByClassName('display')[0]
   screen_result.innerHTML = '0'
 }
-      // Joining arrays and pushing to temp to creat multiple digit numbers & enable calculations
+// Joining arrays and pushing to temp to creat multiple digit numbers & enable calculations
 function compute (evt) {
   input.push(temp)
   temp = ''
   var total = eval(input.join(''))
-  var screen_result = document.getElementsByClassName('display')[0]
-  screen_result.innerHTML = total
+  setDisplay(total)
 }
-      /* Replacing the '÷' and 'x' symbols,because JS doesn't calculate with them. operatorSwitch(i) does is pretty simple: the
+/* Replacing the '÷' and 'x' symbols,because JS doesn't calculate with them. operatorSwitch(i) does is pretty simple: the
      adds value to the ‘result’-div:*/
 function operatorSwitch (i) {
   var transformed = i
@@ -58,8 +57,12 @@ function processNum (evt) {
 function processSym (evt) {
   input.push(temp)
   temp = ''
-  var screen_result = document.getElementsByClassName('display')[0]
-  screen_result.innerHTML = evt.target.innerHTML
+  setDisplay(evt.target.innerHTML)
   input.push(operatorSwitch(evt.target.innerHTML))
   console.log(input)
+}
+
+function setDisplay (displayValue) {
+  var screen_result = document.getElementsByClassName('display')[0]
+  screen_result.innerHTML = displayValue
 }
